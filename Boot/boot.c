@@ -23,10 +23,6 @@ void bootloop()
             case 60:
                 todo = 2;
                 return;
-
-            case 61:
-                todo = 3;
-                return;
     
             default:
                 input = -1;
@@ -44,18 +40,12 @@ void entry(void)
     text_prints("Welcome to J-OS! Boot options below:\n");
     text_prints("F1 - Boot into text mode\n");
     text_prints("F2 - Boot into VGA mode\n");
-    text_prints("F3 - Cause an error >:(");
     keyboard_init();
     bootloop();
     if (todo == 1)
-        text_printc('\n');
+        text_prints("\nLaunching text mode...\n");
     else if (todo == 2)
         vga_init();
-    else if (todo == 3)
-    {
-        error_handler("\nAre you happy now?");
-        while (1);
-    }
     cmd_vga();
     keyboard_set(0);
     terminal_init();
