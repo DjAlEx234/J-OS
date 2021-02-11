@@ -1,4 +1,5 @@
 /.vscode
+/.gitignore
 /J-OS.bin
 /J-OS.iso
 /Output
