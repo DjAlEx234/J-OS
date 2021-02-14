@@ -2,6 +2,7 @@
 export PREFIX="$HOME/opt/cross"
 export TARGET=i686-elf
 export PATH="$PREFIX/bin:$PATH"
+mkdir Output
 i686-elf-gcc -c ./ASM/int.c -o ./Output/int.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I"./Headers/"
 i686-elf-gcc -c ./ASM/inoutb.c -o ./Output/inoutb.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I"./Headers/"
 i686-elf-gcc -c ./Boot/boot.c -o ./Output/entry.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I"./Headers/"
@@ -27,6 +28,4 @@ else
     echo Compile failed
 fi
 qemu-system-i386 -kernel ./J-OS.bin -d guest_errors
-cd Output
-rm *.o
-cd ..
+rm -r Output
