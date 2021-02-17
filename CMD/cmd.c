@@ -19,8 +19,17 @@ void cmd_run(char* cmd)
 {
     if (text_cmp(cmd, "reboot"))
         reboot();
-    cmd_string("\nCommand \"");
-    cmd_string(cmd);
-    cmd_string("\" not found.\n");
-    cmd_string("J-OS>");
+    else if (text_cmp(cmd, "list"))
+    {
+        cmd_string("\nCommands:\n");
+        cmd_string("List - Lists commands\n");
+        cmd_string("Reboot - Reboots PC");
+    }
+    else
+    {
+        cmd_string("\nCommand \"");
+        cmd_string(cmd);
+        cmd_string("\" not found.");
+    }
+    cmd_string("\nJ-OS>");
 }
