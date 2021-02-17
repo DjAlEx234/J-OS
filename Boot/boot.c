@@ -41,7 +41,7 @@ void entry(void)
     keyboard_init();
     bootloop();
     if (todo == 1)
-        text_prints("\nLaunching text mode...\n");
+        text_prints("\nLaunching text mode...\n\n");
     else if (todo == 2)
         vga_init();
     cmd_vga();
