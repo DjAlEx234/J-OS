@@ -29,7 +29,7 @@ void cmd_run(char* cmd)
     {
         cmd_string("\nCommand \"");
         cmd_string(cmd);
-        cmd_string("\" not found.");
+        cmd_string("\" not found. Use \"List\" for help.");
     }
     cmd_string("\nJ-OS>");
 }
