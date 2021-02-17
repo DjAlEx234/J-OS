@@ -15,19 +15,17 @@ void bootloop()
 {
     while (input == -1){keyboard_set(bootopt);};
     switch (input)
-        {
-            case 59:
-                todo = 1;
-                return;
-
-            case 60:
-                todo = 2;
-                return;
-    
-            default:
-                input = -1;
-                bootloop();
-                break;
+    {
+        case 59:
+            todo = 1;
+            return;
+        case 60:
+            todo = 2;
+            return;
+        default:
+            input = -1;
+            bootloop();
+            break;
     }
 }
 void entry(void)
