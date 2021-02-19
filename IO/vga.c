@@ -346,7 +346,17 @@ void vga_printc(int key)
 {
 	if (key == '\0')
 		return;
-	if (key == '\n')
+	if (key == '\b')
+	{
+		if (keyx == 0)
+		{
+			keyx = 320;
+			keyy = keyy - 8;
+		}
+		vga_printc('Q');
+		return;
+	}
+	else if (key == '\n')
 	{
 		keyy = keyy + 8;
 		if (keyy == 200)

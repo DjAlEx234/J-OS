@@ -11,23 +11,16 @@ int todo = 0;
 void bootopt(int i)
 {
     input = i;
+    if (i == 59)
+        todo = 1;
+    else if (i == 60)
+        todo = 2;
 }
-void bootloop()
+static void bootloop()
 {
-    while (input == -1){keyboard_set(bootopt);};
-    switch (input)
-    {
-        case 59:
-            todo = 1;
-            return;
-        case 60:
-            todo = 2;
-            return;
-        default:
-            input = -1;
-            bootloop();
-            break;
-    }
+    while (todo == 0)
+        keyboard_set(bootopt);
+    keyboard_set(0);
 }
 void entry(void)
 {
@@ -37,6 +30,7 @@ void entry(void)
     text_init();
     text_setfgbg(10, 0);
     keyboard_init();
+#ifdef DEBUG
     text_prints("Enable serial debugging?\n");
     text_prints("(Will only output COM1)\n");
     text_prints("F1 - Yes\n");
@@ -47,8 +41,8 @@ void entry(void)
         serial_enable();
         serial_outs("Welcome to J-OS Serial :)");
     }
-    keyboard_set(0);
-    input = -1;
+    todo = 0;
+#endif
     text_clear(0);
     text_prints("Welcome to J-OS! Boot options below:\n");
     text_prints("F1 - Boot into text mode\n");
