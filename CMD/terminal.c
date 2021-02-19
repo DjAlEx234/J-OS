@@ -24,9 +24,11 @@ void terminal_keybd(char in)
     }
     if (terminal_bufptr == 100)
         return;
-    if (c == '\b' && terminal_bufptr != 0)
+    if (c == '\b')
     {
-        printc(c);
+        if (terminal_bufptr == 0)
+            return;
+        printc('\b');
         terminal_bufptr--;
         terminal_buffer[terminal_bufptr] = 0;
         return;

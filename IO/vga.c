@@ -342,6 +342,12 @@ void vga_scroll()
 {
 	
 }
+void vga_rectfill(int x1, int y1, int x2, int y2, int c)
+{
+	for (int i = x1; i < x2; i++)
+		for (int j = y1; j < y2; j++)
+			vga_setp(i, j, c);
+}
 void vga_printc(int key)
 {
 	if (key == '\0')
@@ -353,7 +359,8 @@ void vga_printc(int key)
 			keyx = 320;
 			keyy = keyy - 8;
 		}
-		vga_printc('Q');
+		keyx = keyx - 8;
+		vga_rectfill(keyx, keyy, keyx + 8, keyy + 8, 1);
 		return;
 	}
 	else if (key == '\n')
