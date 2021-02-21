@@ -39,7 +39,7 @@ void entry(void)
     if (todo == 1)
     {
         serial_enable();
-        serial_outs("Welcome to J-OS Serial :)");
+        serial_outs("\nWelcome to J-OS serial output");
     }
     todo = 0;
 #endif
