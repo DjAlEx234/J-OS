@@ -2,4 +2,6 @@
 /.vscode
 /J-OS.bin
 /J-OS.iso
+/J-OS-Debug.bin
+/J-OS-Debug.iso
 /serial.txt

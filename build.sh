@@ -4,10 +4,11 @@ export TARGET=i686-elf
 export PATH="$PREFIX/bin:$PATH"
 flags=""
 qemuf=""
+debug=""
 while true; do
     read -p "Debug Build? [y/n]" yn
     case $yn in
-        [Yy]* ) flags="-D DEBUG"; qemuf="-serial file:./serial.txt"; break;;
+        [Yy]* ) flags="-D DEBUG"; qemuf="-serial file:./serial.txt"; debug="-Debug"; break;;
         [Nn]* ) break;;
         * ) echo "Not an answer.";;
         esac
@@ -26,18 +27,18 @@ i686-elf-gcc -c ./CMD/terminal.c -o ./Output/terminal.o -std=gnu99 -ffreestandin
 nasm -felf32 ./ASM/int.asm -o ./Output/intasm.o
 nasm -felf32 ./Boot/boot.asm -o ./Output/boot.o
 cd Output
-i686-elf-gcc -T ../Boot/linker.ld -o ../J-OS.bin -I"../Headers/" -ffreestanding -O2 -nostdlib int.o intasm.o inoutb.o entry.o boot.o text.o key.o vga.o serial.o cmd.o power.o terminal.o -lgcc
+i686-elf-gcc -T ../Boot/linker.ld -o ../J-OS$debug.bin -I"../Headers/" -ffreestanding -O2 -nostdlib int.o intasm.o inoutb.o entry.o boot.o text.o key.o vga.o serial.o cmd.o power.o terminal.o -lgcc
 cd ..
-if grub-file --is-x86-multiboot ./J-OS.bin; then
+if grub-file --is-x86-multiboot ./J-OS$debug.bin; then
     echo Compile succeeded
     mkdir -p ~/isodir/boot/grub
-    cp ./J-OS.bin ~/isodir/boot/J-OS.bin
+    cp ./J-OS$debug.bin ~/isodir/boot/J-OS.bin
     cp ./grub.cfg ~/isodir/boot/grub/grub.cfg
-    grub-mkrescue -o J-OS.iso ~/isodir
+    grub-mkrescue -o J-OS$debug.iso ~/isodir
     rm -r ~/isodir
 else
     echo Compile failed
 fi
-qemu-system-i386 -kernel ./J-OS.bin -d guest_errors $qemuf
+qemu-system-i386 -kernel ./J-OS$debug.bin -d guest_errors $qemuf
 rm serial.txt
 rm -r Output
