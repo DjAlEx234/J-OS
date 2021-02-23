@@ -34,7 +34,7 @@ if grub-file --is-x86-multiboot ./J-OS$debug.bin; then
     mkdir -p ~/isodir/boot/grub
     cp ./J-OS$debug.bin ~/isodir/boot/J-OS.bin
     cp ./grub.cfg ~/isodir/boot/grub/grub.cfg
-    grub-mkrescue -o J-OS$debug.iso ~/isodir
+    grub-mkrescue -o ./ISO/J-OS$debug.iso ~/isodir
     rm -r ~/isodir
 else
     echo Compile failed
