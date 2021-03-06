@@ -20,12 +20,12 @@ void cmd_flush()
     buffer[9][0] = 0;
 }
 void (*cmd_string)(char s[], int c);
-int color = 0;
+int col = 0;
 void cmd_handle(void *handle, int co)
 {
     cmd_flush();
     cmd_string = handle;
-    color = co;
+    col = co;
     cmd_string("J-OS>", co);
 }
 int cmd_cmp(char a[], char b[])
@@ -70,7 +70,7 @@ void cmd_run(char* cmd)
     serial_outc('\n');
     serial_outs(cmd);
 #endif
-    cmd_string("\n", color);
+    cmd_string("\n", col);
     if (cmd_cmp(buffer[0], "reboot\0"))
     {
 #ifdef DEBUG
@@ -85,20 +85,20 @@ void cmd_run(char* cmd)
     }
     else if (cmd_cmp(buffer[0], "list\0"))
     {
-        cmd_string("Commands:\n", color);
-        cmd_string("Echo - Sends your message\n", color);
-        cmd_string("List - Lists commands\n", color);
-        cmd_string("Reboot - Reboots PC\n", color);
-        cmd_string("UI - Opens graphical interface", color);
+        cmd_string("Commands:\n", col);
+        cmd_string("Echo - Sends your message\n", col);
+        cmd_string("List - Lists commands\n", col);
+        cmd_string("Reboot - Reboots PC\n", col);
+        cmd_string("UI - Opens graphical interface", col);
     }
     else if (cmd_cmp(buffer[0], "ui\0"))
         ui_init();
     else
     {
-        cmd_string("Command \"", color);
-        cmd_string(buffer[0], color);
-        cmd_string("\" not found. Use \"list\" for help.", color);
+        cmd_string("Command \"", col);
+        cmd_string(buffer[0], col);
+        cmd_string("\" not found. Use \"list\" for help.", col);
     }
-    cmd_string("\nJ-OS>", color);
+    cmd_string("\nJ-OS>", col);
     cmd_flush();
 }
