@@ -60,9 +60,7 @@ void text_printc(char c)
     {
         int space = 80 - column;
         for (int i = 0; i != space; i++)
-        {
            text_printc(' ');
-        }
         return;
     }
     else
@@ -76,47 +74,6 @@ void text_printc(char c)
             row = 24;
         }
     }
-}
-int string_len(const char* string)
-{
-	int len = 0;
-	while (string[len])
-		len++;
-	if (string[0] == 0)
-		return len - 1;
-	return len;
-}
-int text_cmp(char a[], char b[])
-{
-    int len = string_len(b);
-    for (int c = 0; c != len; c++)
-        if (a[c] != b[c])
-            return 0;
-    return 1;
-}
-void text_reverse(char text[])
-{
-    int a, b;
-    char c;
-    for (a = 0, b = string_len(text)-1; a<b; a++, b--)
-    {
-        c = text[a];
-        text[a] = text[b];
-        text[b] = c;
-    }
-}
-void text_itoa(int conv, char text[], int base)
-{
-    static char val[] = "0123456789ABCDEF";
-    char* yes = text;
-    int sign;
-    if ((sign = conv) < 0) conv = -conv;
-    do *yes++ = val[conv % base]; 
-    while (conv /= base);
-    if (sign < 0) 
-        *yes++ = '-';
-    *yes = '\0';
-    text_reverse(text);
 }
 void text_prints(char* s, enum colors new_fg)
 {

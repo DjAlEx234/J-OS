@@ -257,6 +257,7 @@ char *tips[32] = {
     "SECURITY EXCEPTION",
     "RESERVED",
 };
+#include "string.h"
 #include "vga.h"
 void asm_error(struct regs *r)
 {
@@ -265,7 +266,7 @@ void asm_error(struct regs *r)
         text_setpos(0, 0);
         text_setfgbg(7, 4);
         char* yes = 0;
-        text_itoa(r->int_no, yes, 16);
+        string_itoa(r->int_no, yes, 16);
         text_prints("ISR: ", 7);
         text_prints(yes, 7);
         text_printc('\n');

@@ -32,8 +32,9 @@ void terminal_keybd(char in)
     printc(c);
     terminal_bufptr++;
 #ifdef DEBUG
+#include "string.h"
     char* test = 0;
-    text_itoa(terminal_bufptr, test, 10);
+    string_itoa(terminal_bufptr, test, 10);
     serial_outc('\n');
     serial_outs(test);
     serial_outc('\n');

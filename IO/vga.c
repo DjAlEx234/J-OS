@@ -394,7 +394,7 @@ int vga_enabled()
 {
 	return enabled;
 }
-#include "text.h"
+#include "string.h"
 void vga_prints(char* str, int co)
 {
     color = co;
@@ -405,7 +405,7 @@ void vga_error(int num, char* message)
 {
 	char* send = 0;
 	vga_cls(0);
-	text_itoa(num, send, 16);
+	string_itoa(num, send, 16);
 	vga_prints(send, 9);
 	vga_prints(message, 10);
 	vga_prints("ISR HANDLER", 11);
