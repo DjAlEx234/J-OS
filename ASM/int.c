@@ -219,9 +219,9 @@ void irq_handler(struct regs *r)
 int isr = 0;
 void error_handler(char* errortext)
 {
-  text_setfgbg(7, 4);
-  text_prints("\nHandler has been called!");
-  text_prints(errortext);
+  text_setfgbg(0, 4);
+  text_prints("\nHandler has been called!", 7);
+  text_prints(errortext, 7);
 }
 char *tips[32] = {
     "DIVIDE BY ZERO",
@@ -266,10 +266,10 @@ void asm_error(struct regs *r)
         text_setfgbg(7, 4);
         char* yes = 0;
         text_itoa(r->int_no, yes, 16);
-        text_prints("ISR: ");
-        text_prints(yes);
+        text_prints("ISR: ", 7);
+        text_prints(yes, 7);
         text_printc('\n');
-        text_prints(tips[r->int_no]);
+        text_prints(tips[r->int_no], 7);
         error_handler("\nISR CALLED!");
     }
     else

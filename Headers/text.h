@@ -21,7 +21,7 @@ enum colors {
 };
 void text_init(void);
 void text_printc(char c);
-void text_prints(char* s);
+void text_prints(char* s, enum colors color);
 void text_clear(enum colors color);
 void text_scroll();
 void text_setpos(int new_row, int new_column);

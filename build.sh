@@ -21,13 +21,14 @@ i686-elf-gcc -c ./IO/text.c -o ./Output/text.o -std=gnu99 -ffreestanding -O2 -Wa
 i686-elf-gcc -c ./IO/keyboard.c -o ./Output/key.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra $flags -I"./Headers/"
 i686-elf-gcc -c ./IO/serial.c -o ./Output/serial.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra $flags -I"./Headers/"
 i686-elf-gcc -c ./IO/vga.c -o ./Output/vga.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra $flags -I"./Headers/"
+i686-elf-gcc -c ./IO/interface.c -o ./Output/interface.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra $flags -I"./Headers/"
 i686-elf-gcc -c ./IO/power.c -o ./Output/power.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra $flags -I"./Headers/"
 i686-elf-gcc -c ./CMD/cmd.c -o ./Output/cmd.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra $flags -I"./Headers/"
 i686-elf-gcc -c ./CMD/terminal.c -o ./Output/terminal.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra $flags -I"./Headers/"
 nasm -felf32 ./ASM/int.asm -o ./Output/intasm.o
 nasm -felf32 ./Boot/boot.asm -o ./Output/boot.o
 cd Output
-i686-elf-gcc -T ../Boot/linker.ld -o ../J-OS$debug.bin -I"../Headers/" -ffreestanding -O2 -nostdlib int.o intasm.o inoutb.o entry.o boot.o text.o key.o vga.o serial.o cmd.o power.o terminal.o -lgcc
+i686-elf-gcc -T ../Boot/linker.ld -o ../J-OS$debug.bin -I"../Headers/" -ffreestanding -O2 -nostdlib int.o intasm.o inoutb.o entry.o boot.o text.o key.o vga.o interface.o serial.o cmd.o power.o terminal.o -lgcc
 cd ..
 if grub-file --is-x86-multiboot ./J-OS$debug.bin; then
     echo Compile succeeded
@@ -39,6 +40,6 @@ if grub-file --is-x86-multiboot ./J-OS$debug.bin; then
 else
     echo Compile failed
 fi
-qemu-system-i386 -kernel ./J-OS$debug.bin -d guest_errors $qemuf
+qemu-system-i386 -kernel ./J-OS$debug.bin $qemuf -d guest_errors
 rm serial.txt
 rm -r Output

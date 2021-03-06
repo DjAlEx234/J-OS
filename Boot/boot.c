@@ -28,13 +28,12 @@ void entry(void)
     outb(0x3D4, 0x0A);
 	outb(0x3D5, 0x20);
     text_init();
-    text_setfgbg(10, 0);
     keyboard_init();
 #ifdef DEBUG
-    text_prints("Enable serial debugging?\n");
-    text_prints("(Will only output COM1)\n");
-    text_prints("F1 - Yes\n");
-    text_prints("F2 - No\n");
+    text_prints("Enable serial debugging?\n", 10);
+    text_prints("(Will only output COM1)\n", 10);
+    text_prints("F1 - Yes\n", 10);
+    text_prints("F2 - No\n", 10);
     bootloop();
     if (todo == 1)
     {
@@ -44,16 +43,21 @@ void entry(void)
     todo = 0;
 #endif
     text_clear(0);
-    text_prints("Welcome to J-OS! Boot options below:\n");
-    text_prints("F1 - Boot into text mode\n");
-    text_prints("F2 - Boot into VGA mode\n");
+    text_prints("Welcome to J-OS! Boot options below:\n", 10);
+    text_prints("F1 - Boot into text mode\n", 10);
+    text_prints("F2 - Boot into VGA mode\n", 10);
     bootloop();
     text_setfgbg(3, 0);
     if (todo == 1)
-        text_prints("\nLaunching text mode...\n\n");
+    {
+        text_prints("\nLaunching text mode...\n\n", 10);
+        cmd_handle(text_prints, 3);
+    }
     else if (todo == 2)
+    {
         vga_init();
-    cmd_vga();
+        cmd_handle(vga_prints, 3);
+    }
     keyboard_set(0);
     terminal_init();
     while (1);

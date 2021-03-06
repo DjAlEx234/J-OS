@@ -118,8 +118,9 @@ void text_itoa(int conv, char text[], int base)
     *yes = '\0';
     text_reverse(text);
 }
-void text_prints(char* s)
+void text_prints(char* s, enum colors new_fg)
 {
+    fg = new_fg;
     for (int i = 0; i < string_len(s); i++)
         text_printc(s[i]);
 }

@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "interface.h"
 #include "serial.h"
 #include "power.h"
 #include "text.h"
@@ -18,18 +19,14 @@ void cmd_flush()
     buffer[8][0] = 0;
     buffer[9][0] = 0;
 }
-void cmd_string(char send[])
-{
-    if (vga == 1)
-        vga_prints(send, 10);
-    else
-        text_prints(send);
-}
-void cmd_vga()
+void (*cmd_string)(char s[], int c);
+int color = 0;
+void cmd_handle(void *handle, int co)
 {
     cmd_flush();
-    vga = vga_enabled();
-    cmd_string("J-OS>");
+    cmd_string = handle;
+    color = co;
+    cmd_string("J-OS>", co);
 }
 int cmd_cmp(char a[], char b[])
 {
@@ -73,7 +70,7 @@ void cmd_run(char* cmd)
     serial_outc('\n');
     serial_outs(cmd);
 #endif
-    cmd_string("\n");
+    cmd_string("\n", color);
     if (cmd_cmp(buffer[0], "reboot\0"))
     {
 #ifdef DEBUG
@@ -82,22 +79,26 @@ void cmd_run(char* cmd)
 #endif
         reboot();
     }
+    else if (cmd_cmp(buffer[0], "echo\0"))
+    {
+
+    }
     else if (cmd_cmp(buffer[0], "list\0"))
     {
-        cmd_string("Commands:\n");
-        cmd_string("List - Lists commands\n");
-        cmd_string("Reboot - Reboots PC");
+        cmd_string("Commands:\n", color);
+        cmd_string("Echo - Sends your message\n", color);
+        cmd_string("List - Lists commands\n", color);
+        cmd_string("Reboot - Reboots PC\n", color);
+        cmd_string("UI - Opens graphical interface", color);
     }
-    else if (cmd_cmp(buffer[0], "debug\0"))
-    {
-        cmd_string(buffer[1]);
-    }
+    else if (cmd_cmp(buffer[0], "ui\0"))
+        ui_init();
     else
     {
-        cmd_string("Command \"");
-        cmd_string(buffer[0]);
-        cmd_string("\" not found. Use \"list\" for help.");
+        cmd_string("Command \"", color);
+        cmd_string(buffer[0], color);
+        cmd_string("\" not found. Use \"list\" for help.", color);
     }
-    cmd_string("\nJ-OS>");
+    cmd_string("\nJ-OS>", color);
     cmd_flush();
 }

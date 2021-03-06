@@ -5,11 +5,6 @@
 #include "vga.h"
 #include "cmd.h"
 void (*printc)(char c);
-void terminal_prints(char* str)
-{
-    for (int i = 0; i < string_len(str); i++)
-        printc(str[i]);
-}
 int terminal_bufptr = 0;
 static char terminal_buffer[99];
 void terminal_keybd(char in)
