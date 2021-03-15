@@ -41,6 +41,6 @@ if grub-file --is-x86-multiboot ./J-OS$debug.bin; then
 else
     echo Compile failed
 fi
-qemu-system-i386 -kernel ./J-OS$debug.bin $qemuf -d guest_errors
+qemu-system-i386 -kernel ./J-OS$debug.bin $qemuf
 rm serial.txt
 rm -r Output
